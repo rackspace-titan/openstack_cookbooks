@@ -37,12 +37,12 @@ execute "nova-manage project create #{node[:nova][:project]} #{node[:nova][:user
   not_if "nova-manage project list | grep #{node[:nova][:project]}"
 end
 
-execute "nova-manage network create #{node[:nova][:network]}" do
+execute "nova-manage network private create #{node[:nova][:network]}" do
   user 'nova'
   not_if { File.exists?("/var/lib/nova/setup") }
 end
 
-execute "nova-manage floating create #{node[:nova][:hostname]} #{node[:nova][:floating_range]}" do
+execute "nova-manage floating create #{node[:nova][:floating_range]}" do
   user 'nova'
   not_if { File.exists?("/var/lib/nova/setup") }
 end
