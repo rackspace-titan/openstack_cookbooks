@@ -28,6 +28,12 @@ sql_connection = <%= node[:glance][:sql_connection] %>
 # notice this, you can lower this value to ensure that SQLAlchemy reconnects
 # before MySQL can drop the connection.
 sql_idle_timeout = 3600
+  
+[pipeline:glance-registry]
+pipeline = context registryapp
 
-[app:glance-registry]
+[app:registryapp]
 paste.app_factory = glance.registry.server:app_factory
+
+[filter:context]
+paste.filter_factory = glance.common.context:filter_factory
